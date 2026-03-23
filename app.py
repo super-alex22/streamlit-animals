@@ -5,18 +5,16 @@ st.title("🌍 My Future Travel Destinations")
 if "destinations" not in st.session_state:
     st.session_state.destinations = []
 
-# Section to add new places
 st.header("Add a place to visit")
 city = st.text_input("City, Country or Place")
 reason = st.text_area("Why do I want to go there?")
-description = st.text_area("Why is the place like?")
+description = st.text_area("What is the place like?")
 image_url = st.text_input("Link to a beautiful photo")
 
-# Save the destination when button is clicked
 if st.button("Add to wishlist"):
     if city and reason and image_url:
         st.session_state.destinations.append({
-            "place": city,
+            "name": city,
             "description": description,
             "reason": reason,
             "image": image_url
@@ -26,24 +24,29 @@ if st.button("Add to wishlist"):
         st.warning("Please fill in all the details!")
 
 if st.session_state.destinations:
-    st.header("Destroy the place")
-    names = []
-    for a in st.session_state.destinations:
-        names.append(a["name"])
-    remove_name = st.selectbox("Choose the place for destroyment", names)
+    st.divider()
+    st.header("Destroy the place") 
+    
+    names = [dest["name"] for dest in st.session_state.destinations]
+    remove_name = st.selectbox("Choose the place for destruction", names)
+    
     if st.button("Remove"):
-        for a in st.session_state.destinations:
-            if a["name"] == remove_name:
-                st.session_state.destinations.remove(a)
+        for dest in st.session_state.destinations:
+            if dest["name"] == remove_name:
+                st.session_state.destinations.remove(dest)
                 break
         st.success(f"{remove_name} is removed!")
+        st.rerun() # Refresh to update the gallery immediately
+
+st.divider()
 st.header("Gallery")
 if st.session_state.destinations:
     cols = st.columns(3)
-    for idx, destination in enumerate(st.session_state.animals):
-        with cols [idx % 3]:
+    for idx, destination in enumerate(st.session_state.destinations):
+        with cols[idx % 3]:
             st.subheader(destination["name"])
-            st.image(destination["image"], use_column_width= True)
-            st.write(animal["description"])
+            st.image(destination["image"], use_container_width=True)
+            st.write(f"**About:** {destination['description']}")
+            st.write(f"**Reason:** {destination['reason']}")
 else:
     st.info("The gallery is empty. Add places!")
