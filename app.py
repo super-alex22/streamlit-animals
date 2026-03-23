@@ -9,7 +9,7 @@ if "destinations" not in st.session_state:
 
 # Section to add new places
 st.header("Add a place to visit")
-city = st.text_input("City or Country")
+city = st.text_input("City, Country or Place")
 reason = st.text_area("Why do I want to go there?")
 image_url = st.text_input("Link to a beautiful photo")
 
