@@ -47,30 +47,19 @@ if st.session_state.destinations:
 st.divider()
 st.header("Gallery")
 if st.session_state.destinations:
-    # We removed the old st.columns(3) that split the whole gallery.
-    # Now we process each destination one by one.
-
     for destination in st.session_state.destinations:
-        st.divider() # Visual separator between items
-        # Title goes on top for clarity
+        st.divider()
         st.subheader(destination["name"]) 
-        
-        # Now we create the two columns for this single item.
-        # We make the text column (right) wider than the picture column (left)
         left_col, right_col = st.columns() 
         
         with left_col:
-            # Picture on the left.
             st.image(destination["image"], use_container_width=True)
 
         with right_col:
-            # Text on the right. No more "macaroni".
-            # We use headings to structure the content.
-            st.write(f"### About this place:")
-            st.write(destination["description"]) # The long "macaroni" text part
-            st.write("---") # Visual horizontal line for structure
-            st.write(f"### Why I want to go:")
-            st.write(destination["reason"]) # The reason field
-
+            st.write("### About this place:")
+            st.write(destination["description"])
+            st.write("---")
+            st.write("### Why I want to go:")
+            st.write(destination["reason"])
 else:
     st.info("The gallery is empty. Add places!")
